@@ -1,0 +1,515 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Interactive C# Tutorial</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+        .code-block {
+            background-color: #1E293B; /* slate-800 */
+            color: #E2E8F0; /* slate-200 */
+            border-radius: 0.5rem;
+            padding: 1rem;
+            position: relative;
+            font-family: 'Courier New', Courier, monospace;
+        }
+        .output-block {
+            background-color: #F8FAFC; /* slate-50 */
+            color: #0F172A; /* slate-900 */
+            border-radius: 0.5rem;
+            padding: 1rem;
+            border: 1px solid #E2E8F0; /* slate-200 */
+            min-height: 50px;
+            white-space: pre-wrap;
+        }
+        .copy-btn {
+            position: absolute;
+            top: 0.5rem;
+            right: 0.5rem;
+            background-color: #334155; /* slate-700 */
+            color: #CBD5E1; /* slate-300 */
+            border: none;
+            padding: 0.25rem 0.5rem;
+            border-radius: 0.375rem;
+            cursor: pointer;
+            font-size: 0.875rem;
+        }
+         .copy-btn:hover {
+            background-color: #475569; /* slate-600 */
+        }
+        .run-btn {
+            background-color: #2563EB; /* blue-600 */
+            color: white;
+        }
+        .run-btn:hover {
+            background-color: #1D48D8; /* blue-700 */
+        }
+        .explain-btn {
+            background-color: #6366F1; /* indigo-500 */
+            color: white;
+        }
+        .explain-btn:hover {
+            background-color: #4F46E5; /* indigo-600 */
+        }
+        .explain-btn:disabled {
+            background-color: #A5B4FC; /* indigo-300 */
+            cursor: not-allowed;
+        }
+        .explanation-block {
+            background-color: #F0F9FF; /* sky-50 */
+            color: #0F172A; /* slate-900 */
+            border-radius: 0.5rem;
+            padding: 1rem;
+            border: 1px solid #E0F2FE; /* sky-200 */
+            white-space: pre-wrap;
+            line-height: 1.6;
+        }
+        .loader {
+            border: 4px solid #f3f3f3; /* light grey */
+            border-top: 4px solid #6366F1; /* indigo-500 */
+            border-radius: 50%;
+            width: 24px;
+            height: 24px;
+            animation: spin 1s linear infinite;
+            margin: 1rem auto;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+    </style>
+</head>
+<body class="bg-slate-100 text-slate-800">
+
+    <div class="flex flex-col md:flex-row min-h-screen">
+        <!-- Sidebar Navigation -->
+        <aside class="w-full md:w-64 bg-white border-r border-slate-200 p-6 sticky top-0 h-screen overflow-y-auto">
+            <h1 class="text-2xl font-bold text-blue-600 mb-6">C# Guide</h1>
+            <nav>
+                <ul class="space-y-2">
+                    <li><a href="#intro" class="block py-2 px-3 rounded-lg hover:bg-slate-100 font-medium">Introduction</a></li>
+                    <li><a href="#setup" class="block py-2 px-3 rounded-lg hover:bg-slate-100 font-medium">Setup</a></li>
+                    <li><a href="#variables" class="block py-2 px-3 rounded-lg hover:bg-slate-100 font-medium">Variables & Data Types</a></li>
+                    <li><a href="#operators" class="block py-2 px-3 rounded-lg hover:bg-slate-100 font-medium">Operators</a></li>
+                    <li><a href="#control-flow" class="block py-2 px-3 rounded-lg hover:bg-slate-100 font-medium">Control Flow</a></li>
+                    <li><a href="#loops" class="block py-2 px-3 rounded-lg hover:bg-slate-100 font-medium">Loops</a></li>
+                    <li><a href="#methods" class="block py-2 px-3 rounded-lg hover:bg-slate-100 font-medium">Methods</a></li>
+                    <li><a href="#classes" class="block py-2 px-3 rounded-lg hover:bg-slate-100 font-medium">Classes & Objects</a></li>
+                    <li><a href="#arrays" class="block py-2 px-3 rounded-lg hover:bg-slate-100 font-medium">Arrays</a></li>
+                    <li><a href="#next-steps" class="block py-2 px-3 rounded-lg hover:bg-slate-100 font-medium">Next Steps</a></li>
+                </ul>
+            </nav>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="flex-1 p-6 md:p-10 lg:p-12">
+            <div class="max-w-4xl mx-auto">
+
+                <!-- Section: Introduction -->
+                <section id="intro" class="mb-32">
+                    <h2 class="text-3xl font-bold mb-4 border-b pb-2">1. Introduction to C#</h2>
+                    <p class="mb-4">
+                        C# (pronounced "C Sharp") is a modern, object-oriented, and type-safe programming language developed by Microsoft. It's designed for building a wide range of applications that run on the .NET Framework, from web and mobile apps to games and enterprise software.
+                    </p>
+                    <div class="bg-blue-100 border-l-4 border-blue-500 text-blue-700 p-4 rounded-lg">
+                        <p><strong class="font-semibold">Key Features:</strong> Object-Oriented, Strongly Typed, Component-Oriented, and part of the powerful .NET ecosystem.</p>
+                    </div>
+                </section>
+
+                <!-- Section: Setup -->
+                <section id="setup" class="mb-32">
+                    <h2 class="text-3xl font-bold mb-4 border-b pb-2">2. Setting Up Your Environment</h2>
+                    <p class="mb-4">
+                        To start writing real C# code, you'll need the .NET SDK and a code editor.
+                    </p>
+                    <ol class="list-decimal list-inside space-y-2 mb-4">
+                        <li><strong>Install .NET SDK:</strong> Download and install the latest .NET SDK from the official Microsoft website. This includes the compiler and runtime.</li>
+                        <li><strong>Choose a Code Editor:</strong>
+                            <ul class="list-disc list-inside ml-6 mt-2">
+                                <li><strong>Visual Studio:</strong> A full-featured Integrated Development Environment (IDE) from Microsoft (recommended for Windows).</li>
+                                <li><strong>Visual Studio Code:</strong> A lightweight, cross-platform code editor with great C# support via extensions.</li>
+                            </ul>
+                        </li>
+                    </ol>
+                    <p class="mb-4">
+                        Once set up, you can create a new console application. The basic "Hello, World!" program looks like this.
+                    </p>
+                    <div class="tutorial-card space-y-4">
+                        <div class="code-block">
+                            <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+                            <pre><code>// A basic C# program
+using System;
+
+class Program
+{
+    static void Main()
+    {
+        Console.WriteLine("Hello, World!");
+    }
+}</code></pre>
+                        </div>
+                        <div class="flex items-center space-x-2">
+                            <button class="run-btn font-medium py-2 px-4 rounded-lg" onclick="runCode(this, 'Hello, World!')">Run</button>
+                            <button class="explain-btn font-medium py-2 px-4 rounded-lg flex items-center" onclick="explainCode(this)">✨ Explain Code</button>
+                        </div>
+                        <div class="output-block"></div>
+                        <div class="explanation-block hidden"></div>
+                    </div>
+                </section>
+                
+                <!-- Section: Variables & Data Types -->
+                <section id="variables" class="mb-32">
+                    <h2 class="text-3xl font-bold mb-4 border-b pb-2">3. Variables and Data Types</h2>
+                    <p class="mb-4">Variables are used to store data. In C#, each variable must have a specific data type.</p>
+                    <ul class="list-disc list-inside mb-4 space-y-1">
+                        <li><code>int</code>: for whole numbers (e.g., 10, -5).</li>
+                        <li><code>double</code> or <code>float</code>: for decimal numbers (e.g., 3.14).</li>
+                        <li><code>char</code>: for a single character (e.g., 'A').</li>
+                        <li><code>string</code>: for a sequence of characters (e.g., "Hello C#").</li>
+                        <li><code>bool</code>: for true/false values.</li>
+                    </ul>
+                     <div class="tutorial-card space-y-4">
+                        <div class="code-block">
+                            <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+                            <pre><code>string name = "Alice";
+int age = 30;
+double height = 5.8;
+bool isStudent = false;
+
+Console.WriteLine("Name: " + name);
+Console.WriteLine("Age: " + age);
+Console.WriteLine("Height: " + height);
+Console.WriteLine("Is Student: " + isStudent);</code></pre>
+                        </div>
+                        <div class="flex items-center space-x-2">
+                            <button class="run-btn font-medium py-2 px-4 rounded-lg" onclick="runCode(this, 'Name: Alice\nAge: 30\nHeight: 5.8\nIs Student: false')">Run</button>
+                            <button class="explain-btn font-medium py-2 px-4 rounded-lg flex items-center" onclick="explainCode(this)">✨ Explain Code</button>
+                        </div>
+                        <div class="output-block"></div>
+                        <div class="explanation-block hidden"></div>
+                    </div>
+                </section>
+
+                <!-- Section: Operators -->
+                <section id="operators" class="mb-32">
+                    <h2 class="text-3xl font-bold mb-4 border-b pb-2">4. Operators</h2>
+                    <p class="mb-4">C# includes various operators for performing operations on variables and values.</p>
+                    <ul class="list-disc list-inside mb-4 space-y-1">
+                        <li><strong>Arithmetic:</strong> <code>+</code>, <code>-</code>, <code>*</code>, <code>/</code>, <code>%</code> (modulo)</li>
+                        <li><strong>Assignment:</strong> <code>=</code>, <code>+=</code>, <code>-=</code></li>
+                        <li><strong>Comparison:</strong> <code>==</code>, <code>!=</code>, <code>></code>, <code><</code>, <code>>=</code>, <code><=</code></li>
+                        <li><strong>Logical:</strong> <code>&&</code> (AND), <code>||</code> (OR), <code>!</code> (NOT)</li>
+                    </ul>
+                    <div class="tutorial-card space-y-4">
+                        <div class="code-block">
+                            <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+                            <pre><code>int x = 10;
+int y = 5;
+
+Console.WriteLine("Addition: " + (x + y));
+Console.WriteLine("Subtraction: " + (x - y));
+Console.WriteLine("Is x greater than y? " + (x > y));</code></pre>
+                        </div>
+                        <div class="flex items-center space-x-2">
+                            <button class="run-btn font-medium py-2 px-4 rounded-lg" onclick="runCode(this, 'Addition: 15\nSubtraction: 5\nIs x greater than y? True')">Run</button>
+                            <button class="explain-btn font-medium py-2 px-4 rounded-lg flex items-center" onclick="explainCode(this)">✨ Explain Code</button>
+                        </div>
+                        <div class="output-block"></div>
+                        <div class="explanation-block hidden"></div>
+                    </div>
+                </section>
+                
+                <!-- Section: Control Flow -->
+                <section id="control-flow" class="mb-32">
+                    <h2 class="text-3xl font-bold mb-4 border-b pb-2">5. Control Flow (if/else)</h2>
+                    <p class="mb-4">Control flow statements allow you to execute different blocks of code based on certain conditions.</p>
+                    <div class="tutorial-card space-y-4">
+                        <div class="code-block">
+                            <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+                            <pre><code>int score = 85;
+
+if (score >= 90)
+{
+    Console.WriteLine("Grade: A");
+}
+else if (score >= 80)
+{
+    Console.WriteLine("Grade: B");
+}
+else
+{
+    Console.WriteLine("Grade: C or lower");
+}</code></pre>
+                        </div>
+                        <div class="flex items-center space-x-2">
+                            <button class="run-btn font-medium py-2 px-4 rounded-lg" onclick="runCode(this, 'Grade: B')">Run</button>
+                            <button class="explain-btn font-medium py-2 px-4 rounded-lg flex items-center" onclick="explainCode(this)">✨ Explain Code</button>
+                        </div>
+                        <div class="output-block"></div>
+                        <div class="explanation-block hidden"></div>
+                    </div>
+                </section>
+
+                <!-- Section: Loops -->
+                <section id="loops" class="mb-32">
+                    <h2 class="text-3xl font-bold mb-4 border-b pb-2">6. Loops</h2>
+                    <p class="mb-4">Loops are used to execute a block of code repeatedly. The <code>for</code> loop is common when the number of iterations is known.</p>
+                    <div class="tutorial-card space-y-4">
+                        <div class="code-block">
+                            <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+                            <pre><code>// This loop prints numbers from 1 to 5
+for (int i = 1; i <= 5; i++)
+{
+    Console.WriteLine("Current number is: " + i);
+}</code></pre>
+                        </div>
+                        <div class="flex items-center space-x-2">
+                            <button class="run-btn font-medium py-2 px-4 rounded-lg" onclick="runCode(this, 'Current number is: 1\nCurrent number is: 2\nCurrent number is: 3\nCurrent number is: 4\nCurrent number is: 5')">Run</button>
+                            <button class="explain-btn font-medium py-2 px-4 rounded-lg flex items-center" onclick="explainCode(this)">✨ Explain Code</button>
+                        </div>
+                        <div class="output-block"></div>
+                        <div class="explanation-block hidden"></div>
+                    </div>
+                </section>
+
+                <!-- Section: Methods -->
+                <section id="methods" class="mb-32">
+                    <h2 class="text-3xl font-bold mb-4 border-b pb-2">7. Methods</h2>
+                    <p class="mb-4">Methods (or functions) are blocks of code that perform a specific task. They help organize code and make it reusable.</p>
+                    <div class="tutorial-card space-y-4">
+                        <div class="code-block">
+                            <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+                            <pre><code>// Method definition
+static void GreetUser(string username)
+{
+    Console.WriteLine("Hello, " + username + "!");
+}
+
+// Method call
+GreetUser("Bob");
+GreetUser("Charlie");
+</code></pre>
+                        </div>
+                        <div class="flex items-center space-x-2">
+                            <button class="run-btn font-medium py-2 px-4 rounded-lg" onclick="runCode(this, 'Hello, Bob!\nHello, Charlie!')">Run</button>
+                            <button class="explain-btn font-medium py-2 px-4 rounded-lg flex items-center" onclick="explainCode(this)">✨ Explain Code</button>
+                        </div>
+                        <div class="output-block"></div>
+                        <div class="explanation-block hidden"></div>
+                    </div>
+                </section>
+
+                <!-- Section: Classes and Objects -->
+                <section id="classes" class="mb-32">
+                    <h2 class="text-3xl font-bold mb-4 border-b pb-2">8. Classes and Objects</h2>
+                    <p class="mb-4">C# is an object-oriented language. A <strong>class</strong> is a blueprint for creating <strong>objects</strong>. An object is an instance of a class.</p>
+                    <div class="tutorial-card space-y-4">
+                        <div class="code-block">
+                            <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+                            <pre><code>public class Dog
+{
+    public string Name;
+
+    public void Bark()
+    {
+        Console.WriteLine(Name + " says Woof!");
+    }
+}
+
+// Create an object (instance) of the Dog class
+Dog myDog = new Dog();
+myDog.Name = "Buddy";
+myDog.Bark();
+</code></pre>
+                        </div>
+                        <div class="flex items-center space-x-2">
+                            <button class="run-btn font-medium py-2 px-4 rounded-lg" onclick="runCode(this, 'Buddy says Woof!')">Run</button>
+                            <button class="explain-btn font-medium py-2 px-4 rounded-lg flex items-center" onclick="explainCode(this)">✨ Explain Code</button>
+                        </div>
+                        <div class="output-block"></div>
+                        <div class="explanation-block hidden"></div>
+                    </div>
+                </section>
+
+                <!-- Section: Arrays -->
+                <section id="arrays" class="mb-32">
+                    <h2 class="text-3xl font-bold mb-4 border-b pb-2">9. Arrays</h2>
+                    <p class="mb-4">Arrays are used to store multiple values of the same type in a single variable.</p>
+                    <div class="tutorial-card space-y-4">
+                        <div class="code-block">
+                            <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+                            <pre><code>string[] cars = {"Volvo", "BMW", "Ford", "Mazda"};
+Console.WriteLine(cars[0]); // Access the first element
+Console.WriteLine("There are " + cars.Length + " cars.");
+
+// Loop through the array
+foreach (string car in cars)
+{
+    Console.WriteLine(car);
+}
+</code></pre>
+                        </div>
+                        <div class="flex items-center space-x-2">
+                            <button class="run-btn font-medium py-2 px-4 rounded-lg" onclick="runCode(this, 'Volvo\nThere are 4 cars.\nVolvo\nBMW\nFord\nMazda')">Run</button>
+                            <button class="explain-btn font-medium py-2 px-4 rounded-lg flex items-center" onclick="explainCode(this)">✨ Explain Code</button>
+                        </div>
+                        <div class="output-block"></div>
+                        <div class="explanation-block hidden"></div>
+                    </div>
+                </section>
+
+                <!-- Section: Next Steps -->
+                <section id="next-steps" class="mb-12"> <!-- Last section has less margin -->
+                    <h2 class="text-3xl font-bold mb-4 border-b pb-2">10. Next Steps</h2>
+                    <p class="mb-4">Congratulations! You've covered the very basics of C#. From here, you can explore more advanced topics:</p>
+                    <ul class="list-disc list-inside space-y-2">
+                        <li><strong>LINQ:</strong> Powerful features for querying data.</li>
+                        <li><strong>ASP.NET Core:</strong> For building modern web applications.</li>
+                        <li><strong>Entity Framework Core:</strong> For working with databases.</li>
+                        <li><strong>MAUI or Unity:</strong> For building cross-platform apps or games.</li>
+                    </ul>
+                    <p class="mt-4">The best way to learn is by building projects. Try creating a simple calculator, a to-do list app, or a small text-based game.</p>
+                </section>
+
+            </div>
+        </main>
+    </div>
+
+    <script>
+        // This script provides the interactivity for the tutorial page.
+        // It simulates the output of C# code without a real compiler.
+
+        function runCode(buttonElement, expectedOutput) {
+            const card = buttonElement.closest('.tutorial-card');
+            const outputBlock = card.querySelector('.output-block');
+            outputBlock.textContent = 'Running...\n';
+            
+            setTimeout(() => {
+                outputBlock.textContent = expectedOutput;
+            }, 500); // Simulate a short delay
+        }
+
+        function copyCode(buttonElement) {
+            const codeBlock = buttonElement.closest('.code-block');
+            const code = codeBlock.querySelector('pre code').innerText;
+            
+            const textarea = document.createElement('textarea');
+            textarea.value = code;
+            document.body.appendChild(textarea);
+            textarea.select();
+            try {
+                document.execCommand('copy');
+                buttonElement.textContent = 'Copied!';
+            } catch (err) {
+                console.error('Failed to copy text: ', err);
+                buttonElement.textContent = 'Failed!';
+            }
+            document.body.removeChild(textarea);
+
+            setTimeout(() => {
+                buttonElement.textContent = 'Copy';
+            }, 2000);
+        }
+
+        async function explainCode(buttonElement) {
+            const card = buttonElement.closest('.tutorial-card');
+            const codeBlock = card.querySelector('.code-block pre code');
+            const explanationBlock = card.querySelector('.explanation-block');
+            const code = codeBlock.innerText;
+
+            explanationBlock.classList.remove('hidden');
+            explanationBlock.innerHTML = '<div class="loader"></div><p class="text-center text-slate-500">✨ Gemini is thinking...</p>';
+            buttonElement.disabled = true;
+
+            const apiKey = ""; 
+            const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-05-20:generateContent?key=${apiKey}`;
+
+            const systemPrompt = "You are an expert C# programming tutor. Explain the following C# code snippet to a complete beginner. Break down what each important line or block of code does in a clear, simple, and encouraging way. Format your output using basic markdown for readability (bolding, code snippets).";
+            const userQuery = `Please explain this C# code:\n\n\`\`\`csharp\n${code}\n\`\`\``;
+
+            const payload = {
+                contents: [{ parts: [{ text: userQuery }] }],
+                systemInstruction: {
+                    parts: [{ text: systemPrompt }]
+                },
+            };
+
+            try {
+                // Implementing fetch with exponential backoff
+                let response;
+                let retries = 3;
+                let delay = 1000;
+                for (let i = 0; i < retries; i++) {
+                    response = await fetch(apiUrl, {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify(payload)
+                    });
+                    if (response.ok) break;
+                    if (!response.ok && response.status === 429) {
+                        await new Promise(resolve => setTimeout(resolve, delay));
+                        delay *= 2;
+                    } else {
+                        break; // Don't retry on other errors
+                    }
+                }
+
+                if (!response.ok) {
+                    throw new Error(`HTTP error! status: ${response.status}`);
+                }
+
+                const result = await response.json();
+                const candidate = result.candidates?.[0];
+
+                if (candidate && candidate.content?.parts?.[0]?.text) {
+                    let htmlContent = candidate.content.parts[0].text;
+                    // Simple markdown to HTML conversion
+                    htmlContent = htmlContent.replace(/`([^`]+)`/g, '<code class="bg-slate-200 text-slate-800 text-sm rounded px-1 py-0.5">$1</code>');
+                    htmlContent = htmlContent.replace(/\*\*(.*?)\*\*/g, '<strong class="font-semibold">$1</strong>');
+                    htmlContent = htmlContent.replace(/^\* (.*$)/gm, '<li class="ml-4 list-disc">$1</li>');
+                    htmlContent = htmlContent.replace(/\n/g, '<br>');
+
+                    explanationBlock.innerHTML = htmlContent;
+                } else {
+                    explanationBlock.textContent = "Sorry, I couldn't generate an explanation. The response was empty or malformed.";
+                    console.error('Unexpected API response structure:', result);
+                }
+
+            } catch (error) {
+                console.error("Error calling Gemini API:", error);
+                explanationBlock.textContent = "An error occurred while fetching the explanation. Please try again in a moment.";
+            } finally {
+                buttonElement.disabled = false;
+            }
+        }
+
+        // Add active class to nav link on scroll
+        const sections = document.querySelectorAll('section');
+        const navLinks = document.querySelectorAll('aside nav a');
+
+        window.onscroll = () => {
+            let current = '';
+            sections.forEach(section => {
+                const sectionTop = section.offsetTop;
+                if (pageYOffset >= sectionTop - 60) {
+                    current = section.getAttribute('id');
+                }
+            });
+
+            navLinks.forEach(link => {
+                link.classList.remove('bg-slate-200', 'text-blue-600');
+                if (link.getAttribute('href') === `#${current}`) {
+                    link.classList.add('bg-slate-200', 'text-blue-600');
+                }
+            });
+        };
+    </script>
+</body>
+</html>
+
